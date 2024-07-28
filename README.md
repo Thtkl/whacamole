@@ -1,4 +1,4 @@
-# Whac-A-Mole Game
+# 🐹🔨Whac-A-Mole Game
 
 Whac-A-Mole is an engaging and interactive game developed using Python's Turtle graphics and Pillow libraries. \  
 In this game, moles pop up randomly on the screen, and the player has to whack them by clicking on them.  \
