@@ -25,6 +25,7 @@ mole.shape(resized_image_path)
 mole.penup()
 mole.goto(0, 0)  # Initial position of the mole
 
+
 # scoreboard
 scoreboard = turtle.Turtle()
 scoreboard.hideturtle()
@@ -41,22 +42,20 @@ def update_scoreboard():
     scoreboard.write(f"Score: {scoreboard_score}", align="center", font=("Arial", 24, "normal"))
 
 # Function to move the mole to a random position
-def move_mole():
+def teleport_mole():
     x = random.randint(-280, 280)  # Random x-coordinate within screen bounds
     y = random.randint(-280, 230)  # Random y-coordinate within screen bounds
     mole.goto(x, y)
-
+    screen.ontimer(teleport_mole, 200)
 
 def mole_clicked(x, y):
     global scoreboard_score
     scoreboard_score += 1
     update_scoreboard()
-    move_mole()
 
 mole.onclick(mole_clicked)
 
 update_scoreboard()
 
-move_mole()
-
+teleport_mole()
 turtle.mainloop()
