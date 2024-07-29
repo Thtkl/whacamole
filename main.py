@@ -35,11 +35,48 @@ scoreboard.color("red")
 scoreboard.write("Score: 0", align="center", font=("Arial", 24, "normal"))
 scoreboard_score = 0
 
+# timer
+timer_turtle = turtle.Turtle()
+timer_turtle.hideturtle()
+timer_turtle.penup()
+timer_turtle.goto(0, 220)
+timer_turtle.color("blue")
+game_time = 20
+
+# start button
+start_button_image_path = "startbutton.gif"
+screen.addshape(start_button_image_path)
+
+start_button = turtle.Turtle()
+start_button.shape(start_button_image_path)
+start_button.penup()
+start_button.goto(0, 50)
+
 
 def update_scoreboard():
     global scoreboard_score
     scoreboard.clear()
     scoreboard.write(f"Score: {scoreboard_score}", align="center", font=("Arial", 24, "normal"))
+
+# update the timer
+def update_timer():
+    global game_time
+    timer_turtle.clear()
+    timer_turtle.write(f"Time: {game_time}s", align="center", font=("Arial", 24, "normal"))
+    if game_time > 0:
+        game_time -= 1
+        screen.ontimer(update_timer, 1000)
+    else:
+        end_game()
+
+# game over
+def end_game():
+    mole.hideturtle()
+    scoreboard.clear()
+    timer_turtle.clear()
+    scoreboard.goto(0, 0)
+    scoreboard.write(f"Game Over! Final Score: {scoreboard_score}", align="center", font=("Arial", 24, "normal"))
+
 
 # Function to move the mole to a random position
 def teleport_mole():
@@ -53,9 +90,21 @@ def mole_clicked(x, y):
     scoreboard_score += 1
     update_scoreboard()
 
-mole.onclick(mole_clicked)
 
-update_scoreboard()
+def start_game(x, y):
+    global game_time, scoreboard_score
+    game_time = 20
+    scoreboard_score = 0
+    update_scoreboard()
+    update_timer()
+    teleport_mole()
+    start_button.hideturtle()
+    mole.showturtle()
+    mole.onclick(mole_clicked)
 
-teleport_mole()
+
+
+start_button.onclick(start_game)
+
+
 turtle.mainloop()
